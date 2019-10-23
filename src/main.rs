@@ -32,7 +32,7 @@ impl<'a> SplitFunctions for ArgMatches<'a> {
                 let mut filtered_columns : Vec<_> = all_columns
                                                     .map(|i| i.parse::<i64>().unwrap()) // ok to unwrap, has been verified by clap
                                                     .map(|i| if i > 0 { i - 1 } else { all_splits.len() as i64 + i }) // clap verified != 0
-                                                    .filter(|i| i < &(all_splits.len() as i64) && i >= &0)
+                                                    .filter(|i| *i < (all_splits.len() as i64) && *i >= 0)
                                                     .collect();
                 if self.is_present("complement") {
                     res = all_splits.to_owned();
