@@ -30,7 +30,6 @@ impl<'a> SplitFunctions for ArgMatches<'a> {
         match self.values_of("column") {
             Some(all_columns) => {
                 let mut filtered_columns : Vec<_> = all_columns
-                                                    .into_iter()
                                                     .map(|i| i.parse::<i64>().unwrap()) // ok to unwrap, has been verified by clap
                                                     .map(|i| if i > 0 { i - 1 } else { all_splits.len() as i64 + i }) // clap verified != 0
                                                     .filter(|i| i < &(all_splits.len() as i64) && i >= &0)
@@ -67,7 +66,7 @@ impl<'a> SplitFunctions for ArgMatches<'a> {
 fn validate_columns(v: String) -> Result<(), String> {
     match v.parse::<i64>() {
        Ok(val) if val != 0 => Ok(()),
-       _ => Err(String::from(format!("The value \"{}\" is not allowed", v)))
+       _ => Err(format!("The value \"{}\" is not allowed", v))
     }
 }
 
